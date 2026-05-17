@@ -1,0 +1,1 @@
+{"model":"gpt-5.5","messages":[{"role":"system","content":"Reply with exactly: pong"},{"role":"user","content":"ping"}]}

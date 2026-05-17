@@ -1,0 +1,67 @@
+[1mdiff --git a/CLAUDE.md b/CLAUDE.md[m
+[1mindex 4d3a1c4..ebeb775 100644[m
+[1m--- a/CLAUDE.md[m
+[1m+++ b/CLAUDE.md[m
+[36m@@ -1,6 +1,6 @@[m
+[31m-# CLAUDE.md — silkroadhub (두별워크플로우 v3.5.0 프로젝트 실행 보강본)[m
+[32m+[m[32m# CLAUDE.md — silkroadhub (두별 워크플로우 v3.6.0 r1 베타 프로젝트 실행 보강본)[m
+ [m
+[31m-본 문서는 Claude Code가 `silkroadhub` 프로젝트에서 작업할 때 따르는 **프로젝트 전용 실행 지침**입니다. 공통 실행 규칙은 글로벌 `~/.claude/CLAUDE.md`의 `두별워크플로우 v3.5.0 — Claude Code 전역 실행 규칙`을 따르고, 본 문서는 `silkroadhub`의 기술스택, 도메인 위험 기준, 마스킹, 운영 참고 문서만 보강합니다.[m
+[32m+[m[32m본 문서는 Claude Code가 `silkroadhub` 프로젝트에서 작업할 때 따르는 **프로젝트 전용 실행 지침**입니다. 공통 실행 규칙은 글로벌 `~/.claude/CLAUDE.md`의 `두별 워크플로우 v3.6.0 r1 베타 — Claude Code 전역 실행 규칙`을 따르고, 본 문서는 `silkroadhub`의 기술스택, 도메인 위험 기준, 마스킹, 운영 참고 문서만 보강합니다.[m
+ [m
+ ## 1. 기술 스택[m
+ [m
+[36m@@ -10,35 +10,38 @@[m
+ | Frontend | Vite, React 18, TypeScript, TailwindCSS, TanStack Query, Vitest, `frontend/` |[m
+ | 배포 | 수동 배포. 자동 배포 플랫폼 미사용. `main` 머지 후 대표님 수동 트리거 |[m
+ [m
+[31m-## 2. 두별워크플로우 v3.5.0 적용 원칙[m
+[32m+[m[32m## 2. 두별 워크플로우 v3.6.0 r1 베타 적용 원칙[m
+ [m
+[31m-`silkroadhub`는 대표님, 마누스, Claude Code, Codex, ChatGPT가 협업하는 **두별워크플로우 v3.5.0**을 따릅니다. Claude Code는 이 구조에서 **Builder / Executor**이며, 마누스가 정리한 run별 `task-card.md`를 기준으로 구현·검증하고 결과를 `handoff.md`로 남깁니다.[m
+[32m+[m[32m`silkroadhub`는 대표님, 마누스, Claude Code, Codex, ChatGPT가 협업하는 **두별 워크플로우 v3.6.0 r1 베타**를 따릅니다. Claude Code는 이 구조에서 **Builder / Executor**이며, 마누스가 정리한 run별 `task-card.md`를 기준으로 구현·검증하고 결과를 `handoff.md`로 남깁니다.[m
+ [m
+ | 주체 | 역할 |[m
+ |---|---|[m
+ | 대표님 | 사업 목적, 우선순위, 최종 승인·보류·중단 결정 |[m
+ | 마누스 | Orchestrator / 현장 소장. 맥락 정렬, task-card 작성, Codex·ChatGPT 호출, Gate 판단 해석, 최종 보고 |[m
+ | Claude Code | Builder / Executor. 프로젝트 `CLAUDE.md`와 run별 `task-card.md` 기준 구현·검증·handoff 작성 |[m
+[31m-| Codex | Auditor / 코드 감리자. 마누스가 제공한 diff·실행 증거 기반 검토 |[m
+[31m-| ChatGPT | Gate Judge + Devil’s Advocate. 마누스가 호출하며 진행·수정·보류·중단 판정과 반대 논리 제시 |[m
+[32m+[m[32m| Codex | [Reviewer] — 코드 감리자. 마누스가 제공한 diff·실행 증거 기반 검토 |[m
+[32m+[m[32m| ChatGPT | [Judge] — Devil's Advocate. 마누스가 호출하며 진행·수정·보류·중단 판정과 반대 논리 제시. 코덱스 [Reviewer] 불가 시 [Reviewer] 폴백도 마누스가 별도 세션으로 호출. |[m
+ [m
+ Claude Code는 Codex 또는 ChatGPT를 직접 호출하지 않습니다. Gate 통과, 진행·수정·보류·중단, 최종 결과 보고는 Claude Code가 판단하지 않고 마누스가 담당합니다.[m
+ [m
+ ## 3. Claude Code 읽기·쓰기 기준[m
+ [m
+[31m-Claude Code의 기본 실행 기준은 글로벌 `~/.claude/CLAUDE.md`, 프로젝트 루트 `CLAUDE.md`, 그리고 마누스가 지정한 run별 `task-card.md`입니다. `AGENTS.md`와 두별워크플로우 설계안은 마누스의 운영 기준이며, Claude Code는 마누스가 `task-card.md`에서 명시적으로 지시한 경우에만 해당 문서를 읽습니다.[m
+[32m+[m[32mClaude Code의 기본 실행 기준은 글로벌 `~/.claude/CLAUDE.md`, 프로젝트 루트 `CLAUDE.md`, 그리고 마누스가 지정한 run별 `task-card.md`입니다. `AGENTS.md`와 두별 워크플로우 설계안은 마누스의 운영 기준이며, Claude Code는 마누스가 `task-card.md`에서 명시적으로 지시한 경우에만 해당 문서를 읽습니다.[m
+ [m
+ | 구분 | 기준 문서 | 설명 |[m
+ |---|---|---|[m
+ | 기본 실행 기준 | 글로벌 `~/.claude/CLAUDE.md` → 프로젝트 `CLAUDE.md` → run별 `task-card.md` | Claude Code가 기본으로 따르는 공통·프로젝트·작업 단위 지침 |[m
+ | 기본 산출 | run별 `handoff.md` | 구현·검증 결과, 변경 파일, 실행 명령, 테스트 결과, 남은 리스크를 마누스에게 인수인계 |[m
+[32m+[m[32m| 기획 맥락 참조 | `PROJECT.md` | Claude Code는 자동 로드하지 않음. task-card §2 "상위 맥락 연결"에 인용된 §C.N 모듈 정보 참조 |[m
+ | 예외 읽기 | `AGENTS.md`, 설계안, `.harness/manuals/*`, 과거 맥락 파일 | 마누스가 `task-card.md`에서 명시적으로 지시한 경우에만 읽음 |[m
+ [m
+ `task-card.md`의 목표, 성공 기준, 제외 범위, Tier, Gate 필요 여부, 금지사항이 불명확하면 구현을 시작하지 않고 마누스에게 질문합니다. Claude Code는 `final-report.md`를 작성하지 않습니다.[m
+ [m
+ ## 4. Superpowers 및 실행 흐름[m
+ [m
+[31m-모든 구현 run은 글로벌 지침에 따라 `/using-superpowers`로 시작합니다. Claude Code는 마누스가 지정한 `task-card.md`를 기준으로 **Superpowers 전체 프로세스**를 명시적으로 사용합니다. Superpowers skill은 Claude Code의 실행 방법을 정하지만, 대표님 지시와 두별워크플로우 권한 경계를 변경하지 않습니다.[m
+[32m+[m[32m모든 구현 run은 글로벌 지침에 따라 `/using-superpowers`로 시작합니다. Claude Code는 마누스가 지정한 `task-card.md`를 기준으로 **Superpowers 전체 프로세스**를 명시적으로 사용합니다. Superpowers skill은 Claude Code의 실행 방법을 정하지만, 대표님 지시와 두별 워크플로우 권한 경계를 변경하지 않습니다.[m
+[32m+[m
+[32m+[m[32m**카테고리 매핑**: 아래 표의 단계는 두별 워크트리 *카테고리 1 (표준 구현)*의 진행 트리다. 마누스가 task-card §[두별 워크트리 카테고리]에 다른 카테고리를 지정하면 글로벌 §[두별 워크트리] 표에 따른 트리 적용. 카테고리 2 디버깅은 systematic-debugging 우선, 카테고리 5 기획·4 문서·운영은 TDD·git-worktrees 생략 가능.[m
+ [m
+ | 단계 | 필수 Superpowers skill | `silkroadhub` 보강 규칙 |[m
+ |---|---|---|[m
+[36m@@ -110,6 +113,8 @@[m [mTier C는 문구, CSS, 스타일, 정적 UI, 오타 수정처럼 **로직 변경[m
+ | BL, HBL, MBL, CLP 번호 | `***MASKED-BL***` |[m
+ | `manifest_no`, `declaration_no` | `***MASKED-MANIFEST***` |[m
+ | PG 거래번호, `toss_`, `imp_` | `***MASKED-PG***` |[m
+[32m+[m[32m| OpenAI / 외부 API 키 | 출력 자체 금지 (디버그 시 첫 7자만 노출 가능) |[m
+[32m+[m[32m| 주민등록번호, 카드 번호 | 출력 자체 금지 |[m
+ | Context7 출력 중 비밀값 | `***MASKED-DOC-SECRET***` |[m
+ | Code Simplifier 출력 중 비밀값 | `***MASKED-CODE-SECRET***` |[m
+ [m
