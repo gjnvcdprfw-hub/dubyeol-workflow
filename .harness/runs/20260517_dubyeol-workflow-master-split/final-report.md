@@ -182,6 +182,8 @@ SUB-1 task-card 결재 후 SUB-2로 진입한 점, SUB-3에서 통과가 아니�
 | 18 | Phase C 명칭 | `test_claude_dispatch`가 공식 Phase C인지, Phase C 후보/검증 run인지 혼선이 있다. | `dubyeol-workflow/PROJECT.md`와 r7 문서에서 “dispatch 검증 run”으로 명칭을 보정한다. |
 | 19 | legacy residue | silkroadhub `.harness/proposals` 등 legacy residue가 client에 남아 있다. | r7 cleanup task에서 master 이전·archive·삭제 기준을 정한다. |
 | 20 | secret scanner | `sk-` 패턴이 `skills-direct-register`, `skill-creator`, `task-card` 같은 일반 단어 일부를 secret-like pattern으로 오탐했다. | r7에서 토큰 길이·boundary 명시 정규식을 사용하거나 gitleaks·trufflehog 같은 전용 secret scanning 도구 도입을 검토한다. |
+| 21 | 긴 명령 전달 | `dubyeol-workflow` import commit이 긴 Terminal 명령 전달 중 일부 실행되어 3개 commit으로 분할되었다. | r7에서 commit 단계도 파일 경유 짧은 명령 + 2단계 확정 실행 SOP를 적용하도록 표준화한다. |
+| 22 | 한글 commit 메시지 | `silkroadhub` cleanup commit 메시지에서 한글 일부가 Terminal 인용 처리 중 축약되었다. | r7에서 commit 메시지는 영문 키워드 + 한글 보조 설명 또는 파일 경유 commit message 방식으로 표준화한다. |
 
 ### 12.3 추가 후속 리스크
 
