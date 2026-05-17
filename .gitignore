@@ -1,19 +1,28 @@
 .DS_Store
 *.log
 *.tmp
+
+# Environment files — real values must never be committed
 .env
 .env.*
-!.env.example
+# .env.template is intentionally tracked (variable names only, no key values)
+!.env.template
+
 node_modules/
 dist/
 build/
 coverage/
 
-# Secret/key material — do not copy client credentials into master repo
+# Secret/key material — do not commit credentials or key loaders
 scripts/load_openai_key.sh
 **/*openai*key*.sh
 **/*secret*.sh
 **/*credentials*.json
+*key*.sh
+
+# Sync infrastructure
+.harness/sync-reports/
+.sync-backups/
 
 # Temporary verification artifacts
 .harness/runs/g2-dummy-runs/

@@ -1,0 +1,48 @@
+# sync-exclude.txt
+# rsync --exclude-from patterns for sync-to-client.sh
+# IMPORTANT: .env.template is intentionally NOT listed here.
+#            It is protected by --include=.env.template in the rsync command
+#            so clients can receive the environment variable template.
+
+# ── Secret / key material ───────────────────────────────────────────────────
+.env
+.env.*
+*.env
+*key*.sh
+*secret*.sh
+*credentials*.json
+*password*
+*token*
+
+# Key loader scripts (load_openai_key.sh style — silkroadhub asset pattern)
+scripts/load_openai_key.sh
+*load_openai_key*
+
+# ── Client-owned run data ────────────────────────────────────────────────────
+# Each client has its own .harness/runs/ — never overwrite with master's
+.harness/runs/
+
+# ── Sync infrastructure (master-side, not needed by clients) ─────────────────
+.harness/sync-reports/
+.sync-backups/
+
+# ── Temporary and log files ──────────────────────────────────────────────────
+tmp/
+*.log
+*.tmp
+
+# ── git internals ────────────────────────────────────────────────────────────
+.git/
+.gitmodules
+
+# ── OS and editor artifacts ──────────────────────────────────────────────────
+.DS_Store
+*.swp
+*.swo
+__pycache__/
+*.pyc
+node_modules/
+
+# ── Master-specific config (clients have their own) ──────────────────────────
+CLAUDE.md
+PROJECT.md
