@@ -8,3 +8,13 @@ node_modules/
 dist/
 build/
 coverage/
+
+# Secret/key material — do not copy client credentials into master repo
+scripts/load_openai_key.sh
+**/*openai*key*.sh
+**/*secret*.sh
+**/*credentials*.json
+
+# Temporary verification artifacts
+.harness/runs/g2-dummy-runs/
+tmp/

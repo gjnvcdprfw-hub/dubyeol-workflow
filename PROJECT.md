@@ -55,8 +55,9 @@
 ### §C.1 두별 워크플로우 운영 인프라
 
 - **한 줄 정의**: 두별 워크플로우 r6 베타 운영을 자동화·표준화하기 위한 Manus Agent Skills, run 산출물, 외부 감리, PROJECT.md 갱신 체계.
-- **현재 상태**: Phase G-1 검증 설계서 작성 완료. 9개 스킬별 검증 목적·입력·기대 동작·실패 신호·증거 기준·G-2 우선순위를 문서화했고, `01-load-sub-manual`의 `scripts/load_sub.sh` 부재 의심 신호를 G-2 최우선 검증 대상으로 확정.
+- **현재 상태**: Phase G-2 실제 동작 검증 완료. 9개 Manus Agent Skills는 PASS 0 / PARTIAL PASS 9 / FAIL 0으로 판정되었고, 공통 결함으로 `silkroadhub` `REPO_ROOT` 하드코딩과 master/client 경계 부정합이 확인되었다. Reviewer는 `HOLD`, Judge는 `수정`을 판정했으며, [Owner] 결정에 따라 본 G-2는 수정 필요 상태로 닫고 실제 수정은 별도 task로 분리한다. GPT Reviewer 폴백 과정에서 마스터로 복사된 키 로드 파일은 삭제했고 `.gitignore`를 보강했으며, `silkroadhub`의 키 로드 파일은 사업 서비스 운영 자산으로 보존한다.
 - **최근 마일스톤** (시간 역순, 최신이 위):
+  - 2026-05-17: Phase G-2 — 9개 Manus Agent Skills 실제 동작 검증 및 Tier A 외부 감리 완료. 9개 전부 PARTIAL PASS, Reviewer HOLD, Judge 수정 판정. 회고 13급 잔재(`silkroadhub` hardcoded root)와 master/client 키 자료 의존 부정합을 확인하고, 마스터 측 키 복사본 삭제 및 `.gitignore` 보강 완료. (run: `20260518_g2-skills-verification-execution`)
   - 2026-05-17: Phase G-1 — 9개 Manus Agent Skills 동작 검증 설계 완료. `01-load-sub-manual`의 `scripts/load_sub.sh` 부재 의심 신호를 G-2 최우선 검증 대상으로 기록. (run: `20260517_g1-skills-verification-design`)
   - 2026-05-17: Phase H — 두별 워크플로우 마스터/클라이언트 분리 완료. dubyeol-workflow 독립 마스터 repo 구성, Phase A~F runs 이전, silkroadhub PROJECT.md §C.1 제거·§D 추가, GitHub rename 검증.
   - 2026-05-17: Phase F — 마누스 `skill-creator` 기반 9개 스킬 직접 등록 완료 (run: `20260517_skills-direct-register`).
@@ -66,10 +67,14 @@
   - 2026-05-16: Phase A — r6 매뉴얼·양식 최초 적용. `dbdbc07` commit으로 r6-rollout 브랜치에 반영 (별도 harness run 없음).
 - **다음 마일스톤**:
   - [x] Phase G-1: 9개 스킬 동작 검증 설계 (dubyeol-workflow 마스터에서 별도 task).
-  - [ ] Phase G-2: 9개 스킬 실제 동작 검증 수행 및 외부 감리 집중. `01-load-sub-manual`을 최우선 검증 대상으로 시작.
-  - [ ] r7 정비: Phase A~H 회고 메모 1~14 반영, 매뉴얼 개정.
-- **현재 막힌 점**: Phase G-1 대기 상태는 해소. 다음 막힌 점은 G-2 실제 검증 전 `01-load-sub-manual`의 스크립트 의존성(`scripts/load_sub.sh`) 존재 여부와 스킬 지시문 정합성 확인 필요.
-- **관련 design doc·문서**: `.harness/runs/20260517_g1-skills-verification-design/`, `.harness/runs/20260516_skills-github-register/`, `.harness/runs/20260517_skills-direct-register/`, `https://github.com/gjnvcdprfw-hub/dubyeol-workflow`
+  - [x] Phase G-2: 9개 스킬 실제 동작 검증 수행 및 외부 감리. 결과는 수정 필요 상태로 종료.
+  - [ ] 정책+sync 설계 task: 마스터·클라이언트 자료 경계, `REPO_ROOT` 환경 변수화, sync 스크립트 설계, 키 자료 sync 제외, 시스템 환경변수(`~/.zshrc`) 단일 키 출처 정책 확정.
+  - [ ] 9개 스킬 수정 task: 정책 위에서 스킬 본문 정정, scripts 경로·shell runtime·input isolation·PROJECT.md diff-first 전환, sync 구현.
+  - [ ] silkroadhub 첫 클라이언트 적용 task: sync 실행과 동작 확인. `silkroadhub` 사업 자산은 손대지 않음.
+  - [ ] G-2 v2 또는 부분 재검증: 수정된 스킬의 master 독립 실행과 client 적용 경로를 재검증.
+  - [ ] r7 정비: 수정 결과와 회고 1~32 일괄 반영.
+- **현재 막힌 점**: 9개 스킬 공통 `silkroadhub` hardcoded root와 master/client sync 정책 부재가 확인됨. 실제 수정은 별도 task-card로 진입해야 한다.
+- **관련 design doc·문서**: `.harness/runs/20260518_g2-skills-verification-execution/`, `.harness/runs/20260517_g1-skills-verification-design/`, `.harness/runs/20260516_skills-github-register/`, `.harness/runs/20260517_skills-direct-register/`, `https://github.com/gjnvcdprfw-hub/dubyeol-workflow`
 
 *(모듈 추가 시 §C.N 번호로 확장)*
 
@@ -81,6 +86,10 @@
 
 | 날짜 | 결정 | 사유 | 영향 모듈 |
 |---|---|---|---|
+| 2026-05-17 | G-2 결과는 수정 필요 상태로 종료하고, 실제 수정은 별도 task로 분리한다. | Reviewer HOLD와 Judge 수정 판정이 일치하며, 9개 스킬 전부 PARTIAL PASS이므로 종료 직행이 아니라 별도 정책+수정 task가 필요하다. | §C.1 |
+| 2026-05-17 | 마스터→클라이언트 sync 패턴을 후속 정책 설계의 기본 방향으로 삼는다. | 마스터에서 정책을 정의하고 각 클라이언트 프로젝트로 비밀값 없는 운영 자산만 sync해야 자료 drift와 내부 경로 부정합을 줄일 수 있다. | §C.1 |
+| 2026-05-17 | 외부 도구 키는 시스템 환경변수(`~/.zshrc`) 단일 출처 정책을 우선 검토한다. | 마스터·클라이언트 어느 쪽도 키 자료를 sync하지 않아야 하며, 같은 로컬·같은 사용자 운영 전제에서는 시스템 환경변수 단일 출처가 가장 정합하다. | §C.1 |
+| 2026-05-17 | `silkroadhub/scripts/load_openai_key.sh`는 silkroadhub 사업 서비스 운영 자산으로 보존한다. | 본 G-2의 부정합은 마스터가 클라이언트 사업 자산에 의존한 것이며, silkroadhub 서비스에서 사용 중인 키 로드 파일은 손대지 않는 것이 정합하다. | §C.1, silkroadhub |
 | 2026-05-17 | G-1은 9개 스킬 동작 검증의 설계 task로 제한하고, 실제 검증·외부 감리는 G-2에 집중한다. | 설계 단계와 실제 검증 단계에서 외부 감리를 중복 호출하면 비효율이 발생하므로, blast radius가 커지는 G-2에 감리를 집중한다. | §C.1 |
 | 2026-05-17 | 두별 워크플로우를 silkroadhub 내부 운영물이 아니라 독립 마스터 운영 프레임워크·도구킷으로 분리한다. | silkroadhub는 첫 번째 사업 클라이언트이며, 향후 다른 사업 프로젝트도 같은 운영 프레임워크를 가져와 적용해야 하므로 운영 원본·회고·스킬·매뉴얼을 마스터에서 관리해야 한다. | §C.1 전체 |
 | 2026-05-17 | Manus GitHub import 경로를 r6 스킬 등록 목적의 정답 경로가 아닌 것으로 재해석한다. | [Owner]가 마누스 자체 `skill-creator` 존재를 확인했고, 스킬 등록은 자체 스킬 생성·전달 메커니즘으로 직접 수행하는 것이 맞다고 정정함. GitHub 저장소는 백업·공개·버전 추적용으로 유지한다. | §C.1 |
@@ -133,7 +142,7 @@
 ## E. 운영 정보
 
 - **마지막 갱신**: 2026-05-17 KST
-- **마지막 갱신 task run ID**: 20260517_g1-skills-verification-design (Phase G-1 SUB-5)
+- **마지막 갱신 task run ID**: 20260518_g2-skills-verification-execution (Phase G-2 SUB-5)
 
 ### E.1 갱신 메커니즘
 
