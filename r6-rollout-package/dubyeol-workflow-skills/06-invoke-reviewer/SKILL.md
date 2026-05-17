@@ -42,7 +42,8 @@ description: 마누스가 코덱스를 호출해 코드 감리(Reviewer)를 수�
 ## 호출
 
 ```bash
-bash scripts/invoke_reviewer.sh <run_id>
+# 저장소 루트에서 실행
+zsh 06-invoke-reviewer/scripts/invoke_reviewer.sh <run_id>
 ```
 
 ## 핵심 안전선

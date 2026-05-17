@@ -1,0 +1,63 @@
+# commit-precheck — 20260519_skills-9-fix
+
+## git status --short
+ M AGENTS.md
+ M PROJECT.md
+ M "SUB-1-\352\270\260\355\232\215\354\235\230\353\217\204.md"
+ M "SUB-2-\354\233\214\355\201\254\355\224\214\353\241\234\354\232\260.md"
+ M "SUB-3-\354\231\270\353\266\200\352\260\220\353\246\254.md"
+ M "SUB-4-\354\210\230\354\240\225.md"
+ M "SUB-5-\354\242\205\353\243\214.md"
+ M r6-rollout-package/dubyeol-workflow-skills/01-load-sub-manual/SKILL.md
+ M r6-rollout-package/dubyeol-workflow-skills/01-load-sub-manual/scripts/load_project_md.sh
+ M r6-rollout-package/dubyeol-workflow-skills/01-load-sub-manual/scripts/load_sub.sh
+ M r6-rollout-package/dubyeol-workflow-skills/02-create-task-card/SKILL.md
+ M r6-rollout-package/dubyeol-workflow-skills/02-create-task-card/scripts/create_task_card.sh
+ M r6-rollout-package/dubyeol-workflow-skills/03-dispatch-to-builder/SKILL.md
+ M r6-rollout-package/dubyeol-workflow-skills/03-dispatch-to-builder/scripts/dispatch.sh
+ M r6-rollout-package/dubyeol-workflow-skills/04-invoke-plan-review/SKILL.md
+ M r6-rollout-package/dubyeol-workflow-skills/04-invoke-plan-review/scripts/invoke_plan_review.sh
+ M r6-rollout-package/dubyeol-workflow-skills/05-verify-handoff/SKILL.md
+ M r6-rollout-package/dubyeol-workflow-skills/05-verify-handoff/scripts/verify_handoff.sh
+ M r6-rollout-package/dubyeol-workflow-skills/06-invoke-reviewer/SKILL.md
+ M r6-rollout-package/dubyeol-workflow-skills/06-invoke-reviewer/scripts/invoke_reviewer.sh
+ M r6-rollout-package/dubyeol-workflow-skills/07-invoke-judge/SKILL.md
+ M r6-rollout-package/dubyeol-workflow-skills/07-invoke-judge/scripts/invoke_judge.sh
+ M r6-rollout-package/dubyeol-workflow-skills/08-write-final-report/SKILL.md
+ M r6-rollout-package/dubyeol-workflow-skills/08-write-final-report/scripts/write_final_report.sh
+ M r6-rollout-package/dubyeol-workflow-skills/09-update-project-md/SKILL.md
+ M r6-rollout-package/dubyeol-workflow-skills/09-update-project-md/scripts/update_project_md.sh
+?? .harness/runs/20260519_r7-maintenance/
+?? .harness/runs/20260519_skills-9-fix/
+
+## git diff --stat
+ AGENTS.md                                          |  21 ++++
+ PROJECT.md                                         |  65 +++++++++++
+ ...270\260\355\232\215\354\235\230\353\217\204.md" |  14 +++
+ ...201\254\355\224\214\353\241\234\354\232\260.md" |  14 +++
+ ...231\270\353\266\200\352\260\220\353\246\254.md" |  15 +++
+ "SUB-4-\354\210\230\354\240\225.md"                |  15 +++
+ "SUB-5-\354\242\205\353\243\214.md"                |  14 +++
+ .../01-load-sub-manual/SKILL.md                    |  12 +-
+ .../01-load-sub-manual/scripts/load_project_md.sh  |  11 +-
+ .../01-load-sub-manual/scripts/load_sub.sh         |  27 +++--
+ .../02-create-task-card/SKILL.md                   |   7 +-
+ .../scripts/create_task_card.sh                    |  31 ++++-
+ .../03-dispatch-to-builder/SKILL.md                |   3 +-
+ .../03-dispatch-to-builder/scripts/dispatch.sh     |  17 ++-
+ .../04-invoke-plan-review/SKILL.md                 |   3 +-
+ .../scripts/invoke_plan_review.sh                  |  58 ++++++----
+ .../05-verify-handoff/SKILL.md                     |  13 ++-
+ .../05-verify-handoff/scripts/verify_handoff.sh    |  75 +++++++++++-
+ .../06-invoke-reviewer/SKILL.md                    |   3 +-
+ .../06-invoke-reviewer/scripts/invoke_reviewer.sh  |  60 ++++++----
+ .../07-invoke-judge/SKILL.md                       |   3 +-
+ .../07-invoke-judge/scripts/invoke_judge.sh        |  59 ++++++----
+ .../08-write-final-report/SKILL.md                 |   7 +-
+ .../scripts/write_final_report.sh                  |  63 ++++++++---
+ .../09-update-project-md/SKILL.md                  |   6 +-
+ .../scripts/update_project_md.sh                   | 126 ++++++++++++++++-----
+ 26 files changed, 594 insertions(+), 148 deletions(-)
+
+## git diff --check
+DIFF_CHECK_EXIT=0

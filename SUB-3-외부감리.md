@@ -308,3 +308,18 @@ PROJECT.md §C.[N] 모듈 맥락:
 **SUB-3 끝.**
 
 본 매뉴얼 개정 제안은 SUB-5 §12 회고에 기록.
+
+---
+
+## r7 Addendum — Codex/GPT 폴백 및 본 채널 대체 예외 (회고 29·30·33, 2026-05-17 KST)
+
+Codex Reviewer가 기술적으로 실패한 경우에도 GPT Reviewer 폴백은 자동 진행하지 않는다. [Foreman]은 실패 사유, GPT Reviewer 폴백, 본 채널 SUB-3 대체 옵션을 함께 [Owner]에게 보고하고, [Owner]가 선택한 경로만 수행한다.
+
+| 상황 | 처리 |
+|---|---|
+| Codex 일시 실패 | 재시도 가능성을 점검하되 자동 Tier 강등 금지 |
+| GPT Reviewer 폴백 후보 | Judge와 다른 세션·다른 입력 파일을 전제로 [Owner] 승인 필요 |
+| 본 채널 SUB-3 대체 후보 | 도구·API 문제 등 예외 사유를 기록하고 [Owner] 승인 필요 |
+| 키 확인 | `SET/NOT SET`만 사용하고 키 값·prefix·키 파일 내용 출력 금지 |
+
+**addendum 끝.**

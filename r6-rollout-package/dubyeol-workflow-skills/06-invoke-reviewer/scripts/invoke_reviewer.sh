@@ -2,15 +2,24 @@
 # invoke_reviewer.sh — [Reviewer] 호출 (코덱스 우선, 지피티 폴백)
 # 두별 워크플로우 v3.6.0 r1 베타 — Manus Agent Skill
 #
-# 호출: bash invoke_reviewer.sh <run_id>
-# 입력: .harness/runs/<run_id>/reviewer-input.md (마누스가 사전 작성)
+# 호출: zsh 06-invoke-reviewer/scripts/invoke_reviewer.sh <run_id>
+# 입력 필수 (사전 작성): .harness/runs/<run_id>/reviewer-input.md
 # 출력: .harness/runs/<run_id>/reviewer-raw.md + codex-exec.log
 
 set -e
 
 RUN_ID="${1:?usage: invoke_reviewer.sh <run_id>}"
 
-REPO_ROOT="/Users/twostars/ClaudeAi/silkroadhub"
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+SKILL_DIR="$(dirname "$SCRIPT_DIR")"
+REPO_ROOT="${REPO_ROOT:-$(dirname "$SKILL_DIR")}"
+
+if [[ ! -d "$REPO_ROOT/.git" ]]; then
+    echo "[ERROR] REPO_ROOT is not a git repository: $REPO_ROOT"
+    echo "Set REPO_ROOT environment variable or run from within the repository."
+    exit 1
+fi
+
 RUN_DIR="${REPO_ROOT}/.harness/runs/${RUN_ID}"
 INPUT_FILE="${RUN_DIR}/reviewer-input.md"
 OUTPUT_FILE="${RUN_DIR}/reviewer-raw.md"
@@ -18,10 +27,12 @@ LOG_FILE="${RUN_DIR}/codex-exec.log"
 
 cd "${REPO_ROOT}"
 
-# 입력 자료 점검
-if [ ! -f "${INPUT_FILE}" ]; then
-  echo "ERROR: 입력 자료 없음 — ${INPUT_FILE}"
-  echo "마누스가 사전 작성 필요: handoff §2.2 변경 파일·§3 진행 이력·diff 발췌·task-card §5"
+# 입력 격리 강제: 입력 파일이 없으면 즉시 오류 종료
+if [[ ! -f "${INPUT_FILE}" ]]; then
+  echo "[ERROR] 입력 자료 없음 — ${INPUT_FILE}"
+  echo "Prerequisite: 마누스가 사전 작성 필요."
+  echo "  내용: handoff §2.2 변경 파일·§3 진행 이력·diff 발췌·task-card §5 (사업 맥락 제외)"
+  echo "  형식: .harness/runs/<run_id>/reviewer-input.md"
   exit 1
 fi
 
@@ -31,9 +42,6 @@ echo "Run ID: ${RUN_ID}" | tee -a "${LOG_FILE}"
 # === 1차: 코덱스 시도 ===
 echo "" | tee -a "${LOG_FILE}"
 echo "1차 시도: 코덱스 ([Reviewer] 표준 도구)" | tee -a "${LOG_FILE}"
-
-export PATH="/Users/twostars/.local/node/bin:$PATH"
-source ~/.zshrc 2>/dev/null || true
 
 CODEX_MAX_RETRY=2
 CODEX_OK=false
@@ -53,7 +61,7 @@ for attempt in $(seq 1 ${CODEX_MAX_RETRY}); do
   sleep 3
 done
 
-if [ "${CODEX_OK}" = "true" ]; then
+if [[ "${CODEX_OK}" = "true" ]]; then
   echo "" | tee -a "${LOG_FILE}"
   echo "코덱스 호출 성공" | tee -a "${LOG_FILE}"
   head -5 "${OUTPUT_FILE}" | tee -a "${LOG_FILE}"
@@ -68,23 +76,33 @@ echo "" | tee -a "${LOG_FILE}"
 echo "코덱스 ${CODEX_MAX_RETRY}회 시도 모두 실패. 지피티 폴백 진입." | tee -a "${LOG_FILE}"
 echo "⚠️  폴백 진입 — [Owner] 보고 필요. gate-review.md §1.1에 폴백 사실 명시 의무" | tee -a "${LOG_FILE}"
 
-if [ -z "${OPENAI_API_KEY}" ]; then
-  echo "ERROR: OPENAI_API_KEY 미설정 — source scripts/load_openai_key.sh 먼저" | tee -a "${LOG_FILE}"
+if [[ -z "${OPENAI_API_KEY}" ]]; then
+  echo "[ERROR] OPENAI_API_KEY 미설정" | tee -a "${LOG_FILE}"
+  echo "  export OPENAI_API_KEY=<your_key>  # ~/.zshrc 또는 현재 세션에서 설정" | tee -a "${LOG_FILE}"
   exit 2
 fi
 
-PROMPT_CONTENT=$(cat "${INPUT_FILE}")
-SYSTEM_PROMPT="당신은 silkroadhub의 [Reviewer] 폴백 세션입니다. 코덱스 불가로 임시 대체. 코드·기술 정합성만 감사하세요. 사업·기획 판단 금지. 입력 자료의 코드·diff·기술 명세를 봐서 통과/조건부 통과/보류/차단 중 하나 판정. 구체 파일·라인 근거 명시 필수."
+# 파일 기반 Python 호출 — heredoc 특수문자 injection 방지
+python3 - "${INPUT_FILE}" "${OUTPUT_FILE}" <<'PYEOF' | tee -a "${LOG_FILE}"
+import json, os, sys, urllib.request
 
-python3 << PYEOF | tee -a "${LOG_FILE}"
-import json, os, urllib.request
+input_file = sys.argv[1]
+output_file = sys.argv[2]
+
+with open(input_file, 'r', encoding='utf-8') as f:
+    prompt_content = f.read()
+
+system_prompt = """당신은 [Reviewer] 폴백 세션입니다. 코덱스 불가로 임시 대체.
+코드·기술 정합성만 감사하세요. 사업·기획 판단 금지.
+입력 자료의 코드·diff·기술 명세를 봐서 통과/조건부 통과/보류/차단 중 하나 판정.
+구체 파일·라인 근거 명시 필수."""
 
 api_key = os.environ.get("OPENAI_API_KEY")
 payload = {
     "model": "gpt-5.5",
     "messages": [
-        {"role": "system", "content": """${SYSTEM_PROMPT}"""},
-        {"role": "user", "content": """${PROMPT_CONTENT}"""}
+        {"role": "system", "content": system_prompt},
+        {"role": "user", "content": prompt_content}
     ],
     "max_tokens": 4000
 }
@@ -98,14 +116,14 @@ try:
     with urllib.request.urlopen(req, timeout=120) as resp:
         data = json.loads(resp.read().decode("utf-8"))
         text = data["choices"][0]["message"]["content"]
-        with open("${OUTPUT_FILE}", "w") as f:
+        with open(output_file, "w", encoding="utf-8") as f:
             f.write("# [Reviewer] 폴백 (지피티) — 코덱스 불가로 임시 대체\n\n")
             f.write(text)
         print(f"폴백 호출 성공. 응답 길이: {len(text)} chars")
         print(f"사용 토큰: {data.get('usage', {})}")
 except Exception as e:
     print(f"폴백 호출 실패: {e}")
-    exit(3)
+    sys.exit(3)
 PYEOF
 
 echo "=== [Reviewer] 호출 종료: $(date) ===" | tee -a "${LOG_FILE}"

@@ -34,7 +34,8 @@ description: 마누스가 SUB-5 §2 진입 시 final-report.md 초안을 자동 
 ## 호출
 
 ```bash
-bash scripts/write_final_report.sh <run_id>
+# 저장소 루트에서 실행
+zsh 08-write-final-report/scripts/write_final_report.sh <run_id>
 ```
 
 ## 핵심 안전선
@@ -49,5 +50,5 @@ bash scripts/write_final_report.sh <run_id>
 
 ## 참조
 
-- silkroadhub `.harness/templates/final-report-template.md`
-- silkroadhub `SUB-5-종료.md` §2
+- `.harness/templates/final-report-template.md` (REPO_ROOT 기준)
+- `SUB-5-종료.md` §2

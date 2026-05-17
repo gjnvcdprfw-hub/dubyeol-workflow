@@ -40,7 +40,8 @@ description: 마누스가 지피티(별도 세션)를 호출해 종합 판정·D
 ## 호출
 
 ```bash
-bash scripts/invoke_judge.sh <run_id>
+# 저장소 루트에서 실행
+zsh 07-invoke-judge/scripts/invoke_judge.sh <run_id>
 ```
 
 ## 핵심 안전선

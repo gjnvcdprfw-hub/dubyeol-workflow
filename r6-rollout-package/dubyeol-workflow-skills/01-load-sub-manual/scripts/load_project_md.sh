@@ -4,7 +4,16 @@
 
 set -e
 
-REPO_ROOT="/Users/twostars/ClaudeAi/silkroadhub"
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+SKILL_DIR="$(dirname "$SCRIPT_DIR")"
+REPO_ROOT="${REPO_ROOT:-$(dirname "$SKILL_DIR")}"
+
+if [[ ! -d "$REPO_ROOT/.git" ]]; then
+    echo "[ERROR] REPO_ROOT is not a git repository: $REPO_ROOT"
+    echo "Set REPO_ROOT environment variable or run from within the repository."
+    exit 1
+fi
+
 FILE="${REPO_ROOT}/PROJECT.md"
 
 if [ ! -f "${FILE}" ]; then

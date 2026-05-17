@@ -45,7 +45,8 @@ description: 마누스가 SUB-1 의도 정렬 5단계 SOP 완료 후 task-card.m
 ## 호출
 
 ```bash
-bash scripts/create_task_card.sh <run_id> <owner_utterance_file> <intent_alignment_file> <tier> <category>
+# 저장소 루트에서 실행
+zsh 02-create-task-card/scripts/create_task_card.sh <run_id> <owner_utterance_file> <intent_alignment_file> <tier> <category>
 ```
 
 ## 핵심 안전선
@@ -61,5 +62,5 @@ bash scripts/create_task_card.sh <run_id> <owner_utterance_file> <intent_alignme
 
 ## 참조
 
-- silkroadhub `.harness/templates/task-card-template.md`
-- silkroadhub `SUB-1-기획의도.md` §3
+- `.harness/templates/task-card-template.md` (REPO_ROOT 기준)
+- `SUB-1-기획의도.md` §3

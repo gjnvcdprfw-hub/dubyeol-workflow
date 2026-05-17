@@ -197,39 +197,3 @@ PROJECT.md는 **task-card를 통해서만** 갱신된다. [Foreman] 단독으로
 | 2026-05-17 | 9개 스킬 등록은 로컬 마스터 원본 정정본 기준으로 진행한다. | sandbox staging은 보조 검증 경로일 뿐 원본이 아니며, 등록 원본은 로컬 마스터 워킹 디렉토리의 Task 3 정정본이다. | §C.1 |
 
 **addendum 끝.**
-
----
-
-## Task 3 SUB-5 Addendum — 9개 스킬 정정·등록 검증 완료 (2026-05-17 KST)
-
-본 addendum은 `20260519_skills-9-fix` 종료에 따른 PROJECT.md 갱신 기록이다. 기존 회고·결정 본문은 삭제·덮어쓰기하지 않고, Task 3 완료 사실과 [Owner] 순서 정정 결정을 추가 기록한다.
-
-### Task 3 완료 기록
-
-| 항목 | 내용 |
-|---|---|
-| run ID | `20260519_skills-9-fix` |
-| 완료 내용 | 9개 Manus Agent Skills의 `SKILL.md`·`scripts/*.sh`를 `skills-fix-guidelines.md §11` 기준으로 정정했다. |
-| 검증 | Builder handoff, Foreman handoff-verification, `zsh -n` 10개 scripts 통과, 9개 evidence 기록 확인, 마누스 환경 등록 및 설치본 30개 파일 hash MATCH. |
-| SUB-3 | [Owner] 결정에 따라 외부 감리를 생략하고, 마누스 환경 등록 및 실사용 검증으로 대체했다. |
-| 현재 상태 | Task 3 기준 막힌 점 없음. commit·push는 별도 결재 대기. |
-
-### 결정 이력 addendum
-
-| 날짜 | 결정 | 사유 | 영향 모듈 |
-|---|---|---|---|
-| 2026-05-17 | Task 3 SUB-3 외부 감리를 생략하고 SUB-5로 직접 진입한다. | 9개 스킬이 마누스 환경에 등록되어 실사용 가능 상태이며, [Owner]가 외부 감리 대신 등록·실사용 검증을 우선하기로 결정했다. | §C.1 |
-| 2026-05-17 | `references/README` residue 4건은 r7 정비로 이관한다. | 해당 residue는 실행 코드가 아니라 참조 문서·README 안내 문서의 sync 정책 정렬 문제이며, Task 3의 직접 수정 범위를 확대하지 않는다. | §C.1 |
-| 2026-05-17 | `dashboard.md`를 폐기하고 병행 task 운영을 중단한다. | `dashboard.md`가 매뉴얼 정의 없는 비표준 산출물로 도입되어 병행 운영 자체가 매뉴얼 정합성을 깬다고 [Owner]가 판단했다. | §C.1, §D |
-| 2026-05-17 | r37 회고 후보를 등록한다. | `dashboard.md` 도입·운영·폐기 및 병행 task 운영 폐기 과정을 객관 사실로 남기기 위함이다. | §D |
-
-### 후속
-
-| 후속 | 상태 |
-|---|---|
-| Task 3 commit | commit-message-draft 작성 후 [Owner] 별도 결재 필요 |
-| Task 3 push | commit 이후 [Owner] 별도 결재 필요 |
-| r7 SUB-2 재개 | Task 3 완전 종결 후 [Owner] 별도 결재 필요 |
-| 등록된 9개 스킬 실사용 검증 | 후속 task 후보 |
-
-**Task 3 SUB-5 addendum 끝.**

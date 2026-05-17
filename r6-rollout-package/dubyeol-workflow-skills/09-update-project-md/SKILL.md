@@ -27,7 +27,11 @@ description: 마누스가 SUB-5 §3 진입 시 PROJECT.md를 자동 갱신하는
 ## 호출
 
 ```bash
-bash scripts/update_project_md.sh <run_id>
+# 저장소 루트에서 실행
+zsh 09-update-project-md/scripts/update_project_md.sh <run_id>
+
+# 비대화형 (드래프트만 생성, PROJECT.md 미적용)
+zsh 09-update-project-md/scripts/update_project_md.sh <run_id> --no-interactive
 ```
 
 ## 핵심 안전선

@@ -3,8 +3,8 @@
 # 두별 워크플로우 v3.6.0 r1 베타 — Manus Agent Skill
 # 검증 완료 2026-05-16
 #
-# 호출: bash dispatch.sh <run_id> <window_id> <tier> <category>
-# 예:   bash dispatch.sh 20260516_manifest-fix 187 A 1
+# 호출: zsh 03-dispatch-to-builder/scripts/dispatch.sh <run_id> <window_id> <tier> <category>
+# 예:   zsh 03-dispatch-to-builder/scripts/dispatch.sh 20260516_manifest-fix 187 A 1
 
 set -e
 
@@ -13,7 +13,16 @@ WINDOW_ID="${2:?usage: dispatch.sh <run_id> <window_id> <tier> <category>}"
 TIER="${3:?usage: dispatch.sh <run_id> <window_id> <tier> <category>}"
 CATEGORY="${4:?usage: dispatch.sh <run_id> <window_id> <tier> <category>}"
 
-REPO_ROOT="/Users/twostars/ClaudeAi/silkroadhub"
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+SKILL_DIR="$(dirname "$SCRIPT_DIR")"
+REPO_ROOT="${REPO_ROOT:-$(dirname "$SKILL_DIR")}"
+
+if [[ ! -d "$REPO_ROOT/.git" ]]; then
+    echo "[ERROR] REPO_ROOT is not a git repository: $REPO_ROOT"
+    echo "Set REPO_ROOT environment variable or run from within the repository."
+    exit 1
+fi
+
 INSTRUCTION_FILE="${REPO_ROOT}/tmp/claude-entry-${RUN_ID}.md"
 RUN_DIR="${REPO_ROOT}/.harness/runs/${RUN_ID}"
 
@@ -31,7 +40,7 @@ Tier: ${TIER}
 본 task는 두별 워크플로우 v3.6.0 r1 SUB-2 단계.
 
 [Builder] 행동 원칙:
-1. 글로벌 ~/.claude/CLAUDE.md + 프로젝트 silkroadhub/CLAUDE.md 자동 로드 확인
+1. 글로벌 ~/.claude/CLAUDE.md + 프로젝트 CLAUDE.md 자동 로드 확인
 2. task-card를 우선 입력으로 읽음. task-card §3 의도 정렬 증거 블록은 해석 기준
 3. /using-superpowers 진입 후 task-card §[두별 워크트리 카테고리] 진행 트리 따름
 4. 모든 산출물에 CLAUDE.md §6 마스킹 규칙 적용

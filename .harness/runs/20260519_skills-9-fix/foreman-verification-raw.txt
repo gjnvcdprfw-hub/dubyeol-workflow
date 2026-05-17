@@ -1,0 +1,131 @@
+# Foreman raw verification — 20260519_skills-9-fix
+## Files
+\n$ test -f .harness/runs/20260519_skills-9-fix/task-card.md
+[exit=0]
+\n$ test -f .harness/runs/20260519_skills-9-fix/handoff.md
+[exit=0]
+\n$ test -f .harness/runs/20260519_skills-9-fix/evidence-fix-summary.md
+[exit=0]
+## Git top-level and current branch
+\n$ git rev-parse --show-toplevel
+/Users/twostars/ClaudeAi/dubyeol-workflow
+[exit=0]
+\n$ git branch --show-current
+main
+[exit=0]
+\n$ git rev-parse --short HEAD
+7dfa777
+[exit=0]
+## Scope: Task 3 direct target changes
+\n$ git status --short -- r6-rollout-package/dubyeol-workflow-skills
+ [31mM[m r6-rollout-package/dubyeol-workflow-skills/01-load-sub-manual/SKILL.md
+ [31mM[m r6-rollout-package/dubyeol-workflow-skills/01-load-sub-manual/scripts/load_project_md.sh
+ [31mM[m r6-rollout-package/dubyeol-workflow-skills/01-load-sub-manual/scripts/load_sub.sh
+ [31mM[m r6-rollout-package/dubyeol-workflow-skills/02-create-task-card/SKILL.md
+ [31mM[m r6-rollout-package/dubyeol-workflow-skills/02-create-task-card/scripts/create_task_card.sh
+ [31mM[m r6-rollout-package/dubyeol-workflow-skills/03-dispatch-to-builder/SKILL.md
+ [31mM[m r6-rollout-package/dubyeol-workflow-skills/03-dispatch-to-builder/scripts/dispatch.sh
+ [31mM[m r6-rollout-package/dubyeol-workflow-skills/04-invoke-plan-review/SKILL.md
+ [31mM[m r6-rollout-package/dubyeol-workflow-skills/04-invoke-plan-review/scripts/invoke_plan_review.sh
+ [31mM[m r6-rollout-package/dubyeol-workflow-skills/05-verify-handoff/SKILL.md
+ [31mM[m r6-rollout-package/dubyeol-workflow-skills/05-verify-handoff/scripts/verify_handoff.sh
+ [31mM[m r6-rollout-package/dubyeol-workflow-skills/06-invoke-reviewer/SKILL.md
+ [31mM[m r6-rollout-package/dubyeol-workflow-skills/06-invoke-reviewer/scripts/invoke_reviewer.sh
+ [31mM[m r6-rollout-package/dubyeol-workflow-skills/07-invoke-judge/SKILL.md
+ [31mM[m r6-rollout-package/dubyeol-workflow-skills/07-invoke-judge/scripts/invoke_judge.sh
+ [31mM[m r6-rollout-package/dubyeol-workflow-skills/08-write-final-report/SKILL.md
+ [31mM[m r6-rollout-package/dubyeol-workflow-skills/08-write-final-report/scripts/write_final_report.sh
+ [31mM[m r6-rollout-package/dubyeol-workflow-skills/09-update-project-md/SKILL.md
+ [31mM[m r6-rollout-package/dubyeol-workflow-skills/09-update-project-md/scripts/update_project_md.sh
+[exit=0]
+## Cross-check: r7 direct targets unchanged by Task 3
+\n$ git status --short -- AGENTS.md SUB-1-기획의도.md SUB-2-워크플로우.md SUB-3-외부감리.md SUB-4-수정.md SUB-5-종료.md PROJECT.md
+[exit=0]
+## Cross-check: silkroadhub mounted path status not touched (read-only status check)
+[exit=0]
+## Residue: silkroadhub hardcoded REPO_ROOT pattern
+\n$ grep -R REPO_ROOT="/Users/twostars r6-rollout-package/dubyeol-workflow-skills
+[exit=1]
+## Residue: bash scripts/ invocation in SKILL.md
+\n$ grep -R bash scripts/ r6-rollout-package/dubyeol-workflow-skills/01-load-sub-manual/SKILL.md r6-rollout-package/dubyeol-workflow-skills/02-create-task-card/SKILL.md r6-rollout-package/dubyeol-workflow-skills/03-dispatch-to-builder/SKILL.md r6-rollout-package/dubyeol-workflow-skills/04-invoke-plan-review/SKILL.md r6-rollout-package/dubyeol-workflow-skills/05-verify-handoff/SKILL.md r6-rollout-package/dubyeol-workflow-skills/06-invoke-reviewer/SKILL.md r6-rollout-package/dubyeol-workflow-skills/07-invoke-judge/SKILL.md r6-rollout-package/dubyeol-workflow-skills/08-write-final-report/SKILL.md r6-rollout-package/dubyeol-workflow-skills/09-update-project-md/SKILL.md
+[exit=1]
+## Residue: load_openai_key reference
+\n$ grep -R load_openai_key r6-rollout-package/dubyeol-workflow-skills
+r6-rollout-package/dubyeol-workflow-skills/README.md:- OpenAI 키 (`scripts/load_openai_key.sh`로 환경변수 로드)
+[exit=0]
+## Syntax: zsh -n for scripts
+zsh -n r6-rollout-package/dubyeol-workflow-skills/01-load-sub-manual/scripts/load_project_md.sh
+[exit=0]
+zsh -n r6-rollout-package/dubyeol-workflow-skills/01-load-sub-manual/scripts/load_sub.sh
+[exit=0]
+zsh -n r6-rollout-package/dubyeol-workflow-skills/02-create-task-card/scripts/create_task_card.sh
+[exit=0]
+zsh -n r6-rollout-package/dubyeol-workflow-skills/03-dispatch-to-builder/scripts/dispatch.sh
+[exit=0]
+zsh -n r6-rollout-package/dubyeol-workflow-skills/04-invoke-plan-review/scripts/invoke_plan_review.sh
+[exit=0]
+zsh -n r6-rollout-package/dubyeol-workflow-skills/05-verify-handoff/scripts/verify_handoff.sh
+[exit=0]
+zsh -n r6-rollout-package/dubyeol-workflow-skills/06-invoke-reviewer/scripts/invoke_reviewer.sh
+[exit=0]
+zsh -n r6-rollout-package/dubyeol-workflow-skills/07-invoke-judge/scripts/invoke_judge.sh
+[exit=0]
+zsh -n r6-rollout-package/dubyeol-workflow-skills/08-write-final-report/scripts/write_final_report.sh
+[exit=0]
+zsh -n r6-rollout-package/dubyeol-workflow-skills/09-update-project-md/scripts/update_project_md.sh
+[exit=0]
+## Evidence includes all 9 skills
+01-load-sub-manual evidence_present=0
+02-create-task-card evidence_present=0
+03-dispatch-to-builder evidence_present=0
+04-invoke-plan-review evidence_present=0
+05-verify-handoff evidence_present=0
+06-invoke-reviewer evidence_present=0
+07-invoke-judge evidence_present=0
+08-write-final-report evidence_present=0
+09-update-project-md evidence_present=0
+## Git destructive signal
+\n$ git reflog -n 20
+[33m7dfa777[m HEAD@{0}: commit: feat: sync-to-client.sh implementation (20260518_sync-script-implementation)
+[33m8c2394f[m HEAD@{1}: commit: feat: skills policy and sync design (20260518_skills-policy-and-sync-design)
+[33md7eb1cd[m HEAD@{2}: commit: feat: skills policy and sync design (20260518_skills-policy-and-sync-design)
+[33m72f8ab2[m HEAD@{3}: commit: feat: G-2 9 Manus Agent Skills verification execution (20260518_g2-skills-verification-execution)
+[33m4f7a103[m HEAD@{4}: commit: feat: G-1 9 Manus Agent Skills . (20260517_g1-skills-verification-design)
+[33m9f2dbd0[m HEAD@{5}: commit: docs: main-sync report 후속 SHA 기록 (20260517_dubyeol-workflow-main-sync)
+[33mb8b3847[m HEAD@{6}: commit: docs: main-sync task (20260517_dubyeol-workflow-main-sync)
+[33m8ec6aeb[m HEAD@{7}: merge workflow-import: Fast-forward
+[33md555e9f[m HEAD@{8}: checkout: moving from workflow-import to main
+[33m8ec6aeb[m HEAD@{9}: commit: docs: Phase H 21-22 (20260517_dubyeol-workflow-master-split)
+[33m9a74957[m HEAD@{10}: commit: docs: Phase H import commit evidence(20260517_dubyeol-workflow-master-split)
+[33m8ef2988[m HEAD@{11}: commit: feat: 두별 워크플로우 마스터 분리 import (Phase H 20260517_dubyeol-workflow-master-split)
+[33m933b75a[m HEAD@{12}: checkout: moving from workflow-import to workflow-import
+[33m933b75a[m HEAD@{13}: commit: import (Phase H 20260517_dubyeol-workflow-master-split)
+[33md555e9f[m HEAD@{14}: checkout: moving from main to workflow-import
+[exit=0]
+## Ahead/push signal
+\n$ git status --short --branch
+## [32mmain[m...[31morigin/main[m
+ [31mM[m r6-rollout-package/dubyeol-workflow-skills/01-load-sub-manual/SKILL.md
+ [31mM[m r6-rollout-package/dubyeol-workflow-skills/01-load-sub-manual/scripts/load_project_md.sh
+ [31mM[m r6-rollout-package/dubyeol-workflow-skills/01-load-sub-manual/scripts/load_sub.sh
+ [31mM[m r6-rollout-package/dubyeol-workflow-skills/02-create-task-card/SKILL.md
+ [31mM[m r6-rollout-package/dubyeol-workflow-skills/02-create-task-card/scripts/create_task_card.sh
+ [31mM[m r6-rollout-package/dubyeol-workflow-skills/03-dispatch-to-builder/SKILL.md
+ [31mM[m r6-rollout-package/dubyeol-workflow-skills/03-dispatch-to-builder/scripts/dispatch.sh
+ [31mM[m r6-rollout-package/dubyeol-workflow-skills/04-invoke-plan-review/SKILL.md
+ [31mM[m r6-rollout-package/dubyeol-workflow-skills/04-invoke-plan-review/scripts/invoke_plan_review.sh
+ [31mM[m r6-rollout-package/dubyeol-workflow-skills/05-verify-handoff/SKILL.md
+ [31mM[m r6-rollout-package/dubyeol-workflow-skills/05-verify-handoff/scripts/verify_handoff.sh
+ [31mM[m r6-rollout-package/dubyeol-workflow-skills/06-invoke-reviewer/SKILL.md
+ [31mM[m r6-rollout-package/dubyeol-workflow-skills/06-invoke-reviewer/scripts/invoke_reviewer.sh
+ [31mM[m r6-rollout-package/dubyeol-workflow-skills/07-invoke-judge/SKILL.md
+ [31mM[m r6-rollout-package/dubyeol-workflow-skills/07-invoke-judge/scripts/invoke_judge.sh
+ [31mM[m r6-rollout-package/dubyeol-workflow-skills/08-write-final-report/SKILL.md
+ [31mM[m r6-rollout-package/dubyeol-workflow-skills/08-write-final-report/scripts/write_final_report.sh
+ [31mM[m r6-rollout-package/dubyeol-workflow-skills/09-update-project-md/SKILL.md
+ [31mM[m r6-rollout-package/dubyeol-workflow-skills/09-update-project-md/scripts/update_project_md.sh
+[31m??[m .harness/runs/20260519_r7-maintenance/
+[31m??[m .harness/runs/20260519_skills-9-fix/
+[31m??[m dashboard.md
+[exit=0]
+## Done

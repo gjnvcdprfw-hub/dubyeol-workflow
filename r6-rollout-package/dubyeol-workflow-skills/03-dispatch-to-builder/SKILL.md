@@ -37,7 +37,8 @@ description: 마누스가 클로드코드(Builder) 세션에 진입 명령을 �
 ## 호출
 
 ```bash
-bash scripts/dispatch.sh <run_id> <window_id> <tier> <category>
+# 저장소 루트에서 실행
+zsh 03-dispatch-to-builder/scripts/dispatch.sh <run_id> <window_id> <tier> <category>
 ```
 
 ## 핵심 안전선 (r6 검증 발견 반영)

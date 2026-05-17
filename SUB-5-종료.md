@@ -375,3 +375,17 @@ Tier C로 task-card §4에 *Gate 생략 사유*가 명시된 경우:
 
 - 외부 도구 계정 식별자 (account_id, user_id, org_id 등) → ***MASKED-ACCOUNT-ID***. 비고: API 키와 별개 카테고리이며, 키는 별도 파일 보관 원칙을 유지한다.
 - 1단계 프롬프트 §2.1·§5·§8 스킬 저장소 파일 수 기대값을 33 → 32로 정정. 컨설턴트 클로드의 오기였음.
+
+---
+
+## r7 Addendum — 종료·commit·첨부 정합성 보강 (회고 22·23·27, 2026-05-17 KST)
+
+SUB-5 종료 단계에서는 한글 commit 메시지 인용·축약 위험을 줄이기 위해 영문 키워드를 우선하고, 필요한 경우 파일 경유 commit message 방식을 사용한다. final-report와 첨부 파일은 run_id, 파일명, 사후 갱신 상태가 일치해야 한다.
+
+| 회고 | 보강 기준 |
+|---:|---|
+| 22 | commit 메시지는 영문 키워드 우선, 한글 설명은 보조로 사용한다. |
+| 23 | final-report 보고 시 첨부 정합성을 재확인한다. |
+| 27 | commit·push 후 final-report 사후 갱신 필요가 생겨도 [Owner] 승인 없는 추가 commit·push는 금지한다. |
+
+**addendum 끝.**

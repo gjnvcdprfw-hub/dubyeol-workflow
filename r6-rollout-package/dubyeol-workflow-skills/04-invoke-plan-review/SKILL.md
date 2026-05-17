@@ -39,7 +39,8 @@ description: 마누스가 지피티에 plan-review를 요청하는 스킬. SUB-2
 ## 호출
 
 ```bash
-bash scripts/invoke_plan_review.sh <run_id>
+# 저장소 루트에서 실행
+zsh 04-invoke-plan-review/scripts/invoke_plan_review.sh <run_id>
 ```
 
 ## 핵심 안전선

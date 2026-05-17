@@ -280,3 +280,18 @@ SUB-5에서 작성할 final-report §12에 다음 자료를 *미리 누적*:
 **SUB-4 끝.**
 
 본 매뉴얼 자체의 개정 제안은 SUB-5 §12 회고에 기록.
+
+---
+
+## r7 Addendum — Foreman 직접 정정 범위 명시 (회고 36, 2026-05-17 KST)
+
+SUB-4에서 Foreman이 직접 수행할 수 있는 정정은 문서·보고·검증 기록·task-card addendum 등 코드 본문이 아닌 범위에 한정한다. 코드 예시·스크립트 수정, 큰 구조 변경, 실행 로직 변경이 필요하면 즉시 중단하고 [Owner]에게 Builder 호출 여부를 확인한다.
+
+| 작업 유형 | Foreman 직접 가능 여부 |
+|---|---|
+| 보고서·task-card·dashboard addendum | 가능 |
+| 운영 문서의 명확한 문구 보강 | 가능, [Owner] 승인 범위 안에서만 |
+| 코드 예시 또는 scripts 변경 | 불가, Builder 별도 결재 필요 |
+| 큰 구조 변경 | 불가, 중단 후 [Owner] 확인 |
+
+**addendum 끝.**

@@ -2,7 +2,7 @@
 # create_task_card.sh — task-card.md 초안 자동 생성
 # 두별 워크플로우 v3.6.0 r1 베타 — Manus Agent Skill
 #
-# 호출: bash create_task_card.sh <run_id> <owner_utterance_file> <intent_alignment_file> <tier> <category>
+# 호출: zsh 02-create-task-card/scripts/create_task_card.sh <run_id> <owner_utterance_file> <intent_alignment_file> <tier> <category>
 
 set -e
 
@@ -12,11 +12,28 @@ INTENT_FILE="${3:?need intent alignment file}"
 TIER="${4:?need tier A/B/C}"
 CATEGORY="${5:?need category 1-5}"
 
-REPO_ROOT="/Users/twostars/ClaudeAi/silkroadhub"
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+SKILL_DIR="$(dirname "$SCRIPT_DIR")"
+REPO_ROOT="${REPO_ROOT:-$(dirname "$SKILL_DIR")}"
+
+if [[ ! -d "$REPO_ROOT/.git" ]]; then
+    echo "[ERROR] REPO_ROOT is not a git repository: $REPO_ROOT"
+    echo "Set REPO_ROOT environment variable or run from within the repository."
+    exit 1
+fi
+
+TEMPLATE="${REPO_ROOT}/.harness/templates/task-card-template.md"
 RUN_DIR="${REPO_ROOT}/.harness/runs/${RUN_ID}"
 TASK_CARD="${RUN_DIR}/task-card.md"
 
 mkdir -p "${RUN_DIR}"
+
+if [[ ! -f "${TEMPLATE}" ]]; then
+    echo "[WARN] task-card 템플릿 없음: ${TEMPLATE}"
+    echo "      헤레독 기반 생성으로 진행합니다."
+else
+    echo "[OK] 템플릿 확인: ${TEMPLATE}"
+fi
 
 OWNER_TEXT=$(cat "${OWNER_UTT}")
 INTENT_TEXT=$(cat "${INTENT_FILE}")
@@ -114,6 +131,16 @@ ${INTENT_TEXT}
 
 ### §10.2 §D 결정 이력 추가 (있으면)
 - *(SUB-5에서 채움)*
+
+### §10.3 PROJECT.md 반영 확인
+- **반영 일시**: SUB-5에서 작성
+- **PROJECT.md §E.마지막 갱신 task run ID에 박은 값**: SUB-5에서 작성
+
+## §11. 다음 단계 진행 가이드
+
+- [ ] [Owner] task-card 결재 ("진행" 응답)
+- [ ] 단계 2 (워크플로우) 진입 → SUB-2 호출
+
 TC_EOF
 
 echo "task-card 초안 생성: ${TASK_CARD}"

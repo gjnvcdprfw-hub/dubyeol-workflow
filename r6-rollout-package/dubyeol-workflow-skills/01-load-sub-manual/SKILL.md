@@ -22,22 +22,22 @@ description: 마누스가 [Owner] 발화에서 SUB 매뉴얼 호출 신호를 �
 
 ## 동작 순서
 
-1. `scripts/load_sub.sh <sub_num>` 실행 (또는 PROJECT.md)
+1. `01-load-sub-manual/scripts/load_sub.sh <sub_num>` 실행 (또는 PROJECT.md)
 2. 해당 SUB-N 매뉴얼 파일 경로 출력
-3. 마누스가 *전체 파일 읽음* (cat·view)
+3. 마누스가 *전체 파일 읽음* (cat·view) — 미리보기만 읽으면 §0 강제력 손실
 4. 매뉴얼 §0 강제력 + §1 진입 첫 행동 인지
 5. 인지 완료 응답으로 [Owner]에 "SUB-N 진입 완료, 첫 행동 …" 보고
 
 ## 호출
 
 ```bash
-# SUB-N 로드
-bash scripts/load_sub.sh 1   # SUB-1
-bash scripts/load_sub.sh 2   # SUB-2
+# SUB-N 로드 (저장소 루트에서 실행)
+zsh 01-load-sub-manual/scripts/load_sub.sh 1   # SUB-1
+zsh 01-load-sub-manual/scripts/load_sub.sh 2   # SUB-2
 # ... 3, 4, 5
 
 # PROJECT.md 진입 점검
-bash scripts/load_project_md.sh
+zsh 01-load-sub-manual/scripts/load_project_md.sh
 ```
 
 ## 핵심 원칙
