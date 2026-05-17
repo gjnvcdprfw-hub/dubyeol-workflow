@@ -464,3 +464,20 @@ workflow-import:
 | force push | 미수행 |
 | history rewrite/rebase/reset --hard | 미수행 |
 | merge 방식 | `git merge --ff-only workflow-import` |
+
+---
+
+## 6. 후속 산출물 commit 및 회고 메모
+
+본 보고서 산출물은 main-sync 작업 완료 후 별도 commit으로 추적성 있게 반영되었다. 1차 보고서 commit은 `b8b38472c32240e43d1ae64decfddde2bb17e3fc`이며, 이후 본 섹션을 추가해 보고서 내부에 후속 commit SHA를 명시 기록한다.
+
+| 항목 | 값 |
+|---|---|
+| 1차 main-sync report commit | `b8b38472c32240e43d1ae64decfddde2bb17e3fc` |
+| main fast-forward 후 기준 commit | `8ec6aeb038b5d063688239024c6b0a0c5a9ccbfc` |
+| 원격 `workflow-import` | 삭제 완료 |
+| 권한 천장 | force push, history rewrite, reset 미수행 |
+
+### 회고 23 후보 — task 보고서 첨부 정합성 검증 의무화
+
+이전 보고에서 신규 `main-sync` run 산출물이 아니라 Phase H final push verification 자료가 첨부되는 오보고가 발생했다. r7 정비 시 종료 보고 단계에 **신규 run_id 폴더 신규 산출물 확인** 체크를 추가해야 한다. 특히 간단 변경 카테고리라도 실제 명령 실행 로그와 첨부 보고서가 같은 run_id에 속하는지 확인하는 절차가 필요하다.
