@@ -88,17 +88,19 @@
 
 ---
 
-## 7. 후속 task 순서
+## 7. 후속 task 순서 — [Owner] 정정판
 
-[Owner]는 기존 순차 권고와 달리, **Task 2(9개 스킬 수정)와 r7 정비를 동시 진입**하는 방향을 유효한 의도로 정정했다. 두 task는 직접 수정 대상이 상당히 분리되어 있다. Task 2는 `SKILL.md`와 scripts를 다루고, r7은 `AGENTS.md`, SUB 매뉴얼, `PROJECT.md` 같은 운영 문서를 다룬다. 따라서 Foreman은 이후 별도 task-card를 통해 두 task를 분리 관리해야 한다.
+[Owner]는 기존 권고 순서가 운영 시점 의존성을 충분히 반영하지 못했다고 정정했다. 정합한 순서는 **sync 구현 → 9개 스킬 수정 + r7 정비 동시 → silkroadhub 적용 → G-2 v2**다. 핵심 근거는 sync 구현이 단순 배포 수단이 아니라 정책 검증 수단이라는 점이다. dry-run 모드만으로도 경로 검증, 제외 규칙, 충돌 처리, 비밀 파일 차단 정책을 안전하게 검증할 수 있으며, 9개 스킬 수정 결과를 silkroadhub로 전달하려면 sync 인프라가 먼저 작동해야 한다.
+
+`skills-fix-guidelines.md §12`에 기존 권고 순서가 있었으나, 이는 참고용이며 [Owner] 정정이 우선이다. 이에 따라 `skills-fix-guidelines.md §12`도 정정했다.
 
 | 순서 | 후속 task | 비고 |
 |---|---|---|
-| 1 | Task 2 — 9개 스킬 수정 | `skills-fix-guidelines.md` 입력 사용 |
-| 1 | r7 정비 | Task 2와 동시 진입 가능. 운영 문서 중심 |
-| 2 | sync 구현 task | Task 2·r7의 결정 반영 후 진행 |
-| 3 | silkroadhub 첫 클라이언트 적용 | sync 구현 후 진행. silkroadhub 사업 자산 보존 |
-| 4 | G-2 v2 또는 부분 재검증 | 수정·sync 결과 확인 |
+| 1 | Task 2 — sync 스크립트 구현 | `sync-design.md` 기준. dry-run 중심으로 정책 검증 수단 확보 |
+| 2 | Task 3 — 9개 스킬 수정 | `skills-fix-guidelines.md` 입력 사용 |
+| 2 | r7 정비 | Task 3과 동시 진행 가능. 운영 문서 중심 |
+| 3 | Task 4 — silkroadhub 첫 클라이언트 적용 | sync 구현과 9개 스킬 수정 결과 준비 후 진행. silkroadhub 사업 자산 보존 |
+| 4 | Task 5 — G-2 v2 또는 부분 재검증 | 수정·client 적용 경로 확인 |
 
 ---
 
@@ -109,23 +111,24 @@
 | 절 | 반영 내용 |
 |---|---|
 | §C.1 현재 상태 | 정책+sync 설계 완료, SUB-2 산출물 3종 승인, 본 채널 대체 검수 완료 |
-| §C.1 다음 마일스톤 | Task 2 + r7 동시 진입, 이후 sync 구현, silkroadhub 적용, 재검증 |
-| §D 결정 이력 | 본 채널 검수가 SUB-3 대체 수행, Task 2 + r7 동시 진행 결정 |
+| §C.1 다음 마일스톤 | Task 2 sync 구현 → Task 3 9개 스킬 수정 + r7 동시 → Task 4 silkroadhub 적용 → Task 5 G-2 v2 |
+| §D 결정 이력 | 본 채널 검수가 SUB-3 대체 수행, 후속 task 순서 [Owner] 정정 결정 |
 | §E 운영 정보 | 마지막 갱신 task run ID를 `20260518_skills-policy-and-sync-design`로 갱신 |
 
 ---
 
-## 9. 회고 33 후보
+## 9. 회고 33~34 후보
 
 | 번호 | 회고 후보 | r7 반영 제안 |
 |---:|---|---|
 | 33 | 본 채널 컨설턴트 클로드가 외부 감리(Reviewer + Judge)를 대체 수행할 수 있다. 특히 정책 task처럼 외부 API 호출이 자기 참조 부정합을 만들 때 본 채널 검수가 유효하다. | SUB-3 대체 수단으로 “본 채널 검수”를 예외 절차에 명문화한다. 조건은 [Owner] 명시 승인, 본 채널 검수 내용 기록, gate-review 생략 또는 대체 기록 명시로 둔다. |
+| 34 | 정책 task가 박은 후속 순서가 실제 운영 시점에서 부정합할 수 있다. 정책 task의 권고는 참고용이며, 실제 후속 task 순서 결정 권한은 [Owner]에게 있다. | r7에서 “후속 task 순서 결정권은 [Owner]에게 있고, 정책 task의 순서 권고는 운영 인프라 의존성 검토 후 재결정될 수 있다”는 원칙을 명문화한다. |
 
 ---
 
 ## 10. 결론
 
-정책+sync 설계 task는 SUB-2 산출물 기준으로 성공적으로 완료되었다. `policy.md`, `sync-design.md`, `skills-fix-guidelines.md`는 후속 Task 2와 r7 정비의 직접 입력으로 사용할 수 있다. SUB-3 외부 감리는 [Owner] 판단에 따라 자기 참조 부정합을 피하기 위해 본 채널 검수로 대체되었고, 본 final-report는 그 대체 결정과 회고 33 후보를 명시한다.
+정책+sync 설계 task는 SUB-2 산출물 기준으로 성공적으로 완료되었다. `policy.md`, `sync-design.md`, `skills-fix-guidelines.md`는 후속 Task 2 sync 구현, Task 3 9개 스킬 수정, r7 정비의 직접 입력으로 사용할 수 있다. SUB-3 외부 감리는 [Owner] 판단에 따라 자기 참조 부정합을 피하기 위해 본 채널 검수로 대체되었고, 본 final-report는 그 대체 결정, 후속 순서 정정, 회고 33~34 후보를 명시한다.
 
 [Owner]는 본 task에 대해 `승인, commit, push`를 지시했다. 따라서 PROJECT.md 갱신 후 지정 메시지로 commit하고 `origin main`에 push한다.
 

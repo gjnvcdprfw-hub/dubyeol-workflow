@@ -393,24 +393,25 @@ sed \
 
 ---
 
-## 12. 후속 task 순서 (명시적)
+## 12. 후속 task 순서 (명시적, [Owner] 정정 우선)
 
-본 정책+sync 설계 task 이후 권고 진행 순서:
+본 정책+sync 설계서의 초안 권고 순서는 참고용이며, 실제 운영 순서는 [Owner]가 운영 인프라 의존성 위에서 재결정한다. [Owner] 정정에 따라 후속 task 순서는 다음과 같다.
 
 | 순서 | task | 내용 | 선행 조건 |
 |---:|---|---|---|
-| 1 | **9개 스킬 수정 task** | 본 가이드라인 기반으로 9개 스킬 SKILL.md + scripts 수정. P0 항목 우선. | 본 설계 task SUB-3 통과 |
-| 2 | **sync 스크립트 구현 task** | `sync-design.md` 기반으로 `sync-to-client.sh` 실제 구현. | 9개 스킬 수정 완료 (REPO_ROOT 정책 확정 후 구현해야 sync 경로가 정확함) |
-| 3 | **silkroadhub 첫 클라이언트 적용 task** | sync 실행 및 동작 확인. silkroadhub 사업 자산 손대지 않음. | sync 스크립트 구현 완료 |
-| 4 | **G-2 v2 또는 부분 재검증** | 수정된 9개 스킬 재검증. REPO_ROOT 자동 감지 동작 확인. | 9개 스킬 수정 완료 |
-| 5 | **r7 정비** | 회고 1~32 일괄 반영, 운영 문서 정비, 감리 절차 명문화. | 위 task들 완료 또는 [Owner] 승인 |
+| 1 | **Task 2 — sync 스크립트 구현 task** | `sync-design.md` 기반으로 `sync-to-client.sh` 실제 구현. 우선 dry-run 중심으로 정책 검증 수단을 확보한다. | 본 설계 task 종료 |
+| 2 | **Task 3 — 9개 스킬 수정 task** | 본 가이드라인 기반으로 9개 스킬 SKILL.md + scripts 수정. P0 항목 우선. | sync 구현 또는 dry-run 검증 인프라 확보 |
+| 2 | **r7 정비** | 회고 1~34 일괄 반영, 운영 문서 정비, 감리 대체 절차 명문화. 9개 스킬 수정 task와 동시 진행 가능. | 본 설계 task 종료, [Owner] 별도 task-card 승인 |
+| 3 | **Task 4 — silkroadhub 첫 클라이언트 적용 task** | sync 실행 및 동작 확인. silkroadhub 사업 자산 손대지 않음. | sync 구현 완료 및 9개 스킬 수정 결과 준비 |
+| 4 | **Task 5 — G-2 v2 또는 부분 재검증** | 수정된 9개 스킬과 client 적용 경로 재검증. | Task 3·Task 4 완료 |
 
-### 12.1 순서 근거
+### 12.1 순서 근거 ([Owner] 정정 반영)
 
-- sync 스크립트를 9개 스킬 수정 전에 구현하면, 스킬이 여전히 잘못된 `REPO_ROOT`를 가진 상태로 sync될 위험이 있다.
-- silkroadhub 적용은 sync 스크립트가 검증된 후 진행해야 사업 자산을 보호할 수 있다.
-- G-2 재검증은 수정이 완료된 후 의미가 있다.
-- r7 정비는 모든 수정 결과를 반영하므로 마지막에 수행한다.
+sync 구현은 단순 배포 수단이 아니라 정책 검증 수단이다. 실제 sync를 강제하지 않아도 dry-run 모드로 경로 검증, 제외 규칙, 충돌 처리, 비밀 파일 차단 설계를 안전하게 검증할 수 있다. 9개 스킬 수정 결과를 silkroadhub로 전달하려면 sync 인프라가 먼저 작동해야 하므로, sync 구현을 Task 2로 우선 진행한다.
+
+9개 스킬 수정과 r7 정비는 직접 수정 대상이 상당히 분리되어 있다. Task 3은 SKILL.md와 scripts 중심이고, r7은 AGENTS.md·SUB 매뉴얼·PROJECT.md 등 운영 문서 중심이다. 따라서 두 task는 [Owner] 별도 task-card 아래에서 동시 진행 가능하다.
+
+silkroadhub 적용은 sync 구현과 9개 스킬 수정 결과가 준비된 뒤 진행해야 한다. G-2 v2 또는 부분 재검증은 실제 수정과 적용 경로가 마련된 뒤 의미가 있다.
 
 ---
 

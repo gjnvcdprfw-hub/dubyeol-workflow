@@ -55,9 +55,9 @@
 ### §C.1 두별 워크플로우 운영 인프라
 
 - **한 줄 정의**: 두별 워크플로우 r6 베타 운영을 자동화·표준화하기 위한 Manus Agent Skills, run 산출물, 외부 감리, PROJECT.md 갱신 체계.
-- **현재 상태**: 정책+sync 설계 task 완료. `policy.md`, `sync-design.md`, `skills-fix-guidelines.md` 3종이 작성되어 master/client 자료 경계, `REPO_ROOT` 환경 변수화, 시스템 환경변수 단일 키 출처, 키 자료 sync 금지, `sync-to-client.sh` 설계, 9개 스킬 수정 가이드라인이 고정되었다. 본 task는 API 키 정책 자체를 설계하는 자기 참조 성격 때문에 외부 API 기반 SUB-3 감리를 중단하고, [Owner] 본 채널 검수로 대체했다. 후속은 [Owner] 의도에 따라 Task 2(9개 스킬 수정)와 r7 정비를 동시 진입하고, sync 구현과 silkroadhub 첫 클라이언트 적용은 그 뒤에 진행한다.
+- **현재 상태**: 정책+sync 설계 task 완료. `policy.md`, `sync-design.md`, `skills-fix-guidelines.md` 3종이 작성되어 master/client 자료 경계, `REPO_ROOT` 환경 변수화, 시스템 환경변수 단일 키 출처, 키 자료 sync 금지, `sync-to-client.sh` 설계, 9개 스킬 수정 가이드라인이 고정되었다. 본 task는 API 키 정책 자체를 설계하는 자기 참조 성격 때문에 외부 API 기반 SUB-3 감리를 중단하고, [Owner] 본 채널 검수로 대체했다. 후속은 [Owner] 정정에 따라 Task 2(sync 스크립트 구현)를 우선 진행하고, 그 다음 Task 3(9개 스킬 수정)과 r7 정비를 동시 진입하며, silkroadhub 첫 클라이언트 적용과 G-2 v2는 그 뒤에 진행한다.
 - **최근 마일스톤** (시간 역순, 최신이 위):
-  - 2026-05-17: 정책+sync 설계 완료. `policy.md` 175줄, `sync-design.md` 393줄, `skills-fix-guidelines.md` 417줄 작성. SUB-3 외부 API 감리는 자기 참조 부정합 회피를 위해 중단하고 [Owner] 본 채널 검수로 대체. 회고 33 후보 기록. (run: `20260518_skills-policy-and-sync-design`)
+  - 2026-05-17: 정책+sync 설계 완료. `policy.md` 175줄, `sync-design.md` 393줄, `skills-fix-guidelines.md` 417줄 작성. SUB-3 외부 API 감리는 자기 참조 부정합 회피를 위해 중단하고 [Owner] 본 채널 검수로 대체. 회고 33~34 후보 기록. (run: `20260518_skills-policy-and-sync-design`)
   - 2026-05-17: Phase G-2 — 9개 Manus Agent Skills 실제 동작 검증 및 Tier A 외부 감리 완료. 9개 전부 PARTIAL PASS, Reviewer HOLD, Judge 수정 판정. 회고 13급 잔재(`silkroadhub` hardcoded root)와 master/client 키 자료 의존 부정합을 확인하고, 마스터 측 키 복사본 삭제 및 `.gitignore` 보강 완료. (run: `20260518_g2-skills-verification-execution`)
   - 2026-05-17: Phase G-1 — 9개 Manus Agent Skills 동작 검증 설계 완료. `01-load-sub-manual`의 `scripts/load_sub.sh` 부재 의심 신호를 G-2 최우선 검증 대상으로 기록. (run: `20260517_g1-skills-verification-design`)
   - 2026-05-17: Phase H — 두별 워크플로우 마스터/클라이언트 분리 완료. dubyeol-workflow 독립 마스터 repo 구성, Phase A~F runs 이전, silkroadhub PROJECT.md §C.1 제거·§D 추가, GitHub rename 검증.
@@ -70,12 +70,12 @@
   - [x] Phase G-1: 9개 스킬 동작 검증 설계 (dubyeol-workflow 마스터에서 별도 task).
   - [x] Phase G-2: 9개 스킬 실제 동작 검증 수행 및 외부 감리. 결과는 수정 필요 상태로 종료.
   - [x] 정책+sync 설계 task: 마스터·클라이언트 자료 경계, `REPO_ROOT` 환경 변수화, sync 스크립트 설계, 키 자료 sync 제외, 시스템 환경변수(`~/.zshrc`) 단일 키 출처 정책 확정.
-  - [ ] Task 2 — 9개 스킬 수정 task: 정책 위에서 스킬 본문 정정, scripts 경로·shell runtime·input isolation·PROJECT.md diff-first 전환. `skills-fix-guidelines.md`를 직접 입력으로 사용.
-  - [ ] r7 정비: Task 2와 동시 진입 가능. AGENTS.md, SUB-1~5, PROJECT.md 등 운영 문서에 회고 1~33과 대체 감리 절차 반영.
-  - [ ] sync 구현 task: Task 2와 r7 결정 반영 후 `sync-design.md` 기준으로 구현.
-  - [ ] silkroadhub 첫 클라이언트 적용 task: sync 구현 후 실행과 동작 확인. `silkroadhub` 사업 자산은 손대지 않음.
-  - [ ] G-2 v2 또는 부분 재검증: 수정된 스킬의 master 독립 실행과 client 적용 경로를 재검증.
-- **현재 막힌 점**: 정책+sync 설계는 완료되었으나 실제 9개 스킬 수정, r7 운영 문서 정비, sync 구현은 아직 미진입 상태다. 다음 task-card에서 Task 2와 r7을 분리 관리해야 한다.
+  - [ ] Task 2 — sync 스크립트 구현 task: `sync-design.md` 기준으로 `sync-to-client.sh`를 구현하되, dry-run 중심으로 정책 검증 수단을 먼저 확보.
+  - [ ] Task 3 — 9개 스킬 수정 task: 정책 위에서 스킬 본문 정정, scripts 경로·shell runtime·input isolation·PROJECT.md diff-first 전환. `skills-fix-guidelines.md`를 직접 입력으로 사용.
+  - [ ] r7 정비: Task 3과 동시 진입 가능. AGENTS.md, SUB-1~5, PROJECT.md 등 운영 문서에 회고 1~34와 대체 감리 절차, 후속 순서 결정권 원칙 반영.
+  - [ ] Task 4 — silkroadhub 첫 클라이언트 적용 task: sync 구현과 9개 스킬 수정 결과 준비 후 실행과 동작 확인. `silkroadhub` 사업 자산은 손대지 않음.
+  - [ ] Task 5 — G-2 v2 또는 부분 재검증: 수정된 스킬의 master 독립 실행과 client 적용 경로를 재검증.
+- **현재 막힌 점**: 정책+sync 설계는 완료되었으나 sync 구현, 9개 스킬 수정, r7 운영 문서 정비는 아직 미진입 상태다. 다음 task-card는 Task 2(sync 구현)를 우선 진입하고, 이후 Task 3(9개 스킬 수정)과 r7을 분리 관리해야 한다.
 - **관련 design doc·문서**: `.harness/runs/20260518_skills-policy-and-sync-design/`, `.harness/runs/20260518_g2-skills-verification-execution/`, `.harness/runs/20260517_g1-skills-verification-design/`, `.harness/runs/20260516_skills-github-register/`, `.harness/runs/20260517_skills-direct-register/`, `https://github.com/gjnvcdprfw-hub/dubyeol-workflow`
 
 *(모듈 추가 시 §C.N 번호로 확장)*
@@ -89,7 +89,7 @@
 | 날짜 | 결정 | 사유 | 영향 모듈 |
 |---|---|---|---|
 | 2026-05-17 | 정책+sync 설계 task에서 본 채널 검수를 SUB-3 외부 감리 대체로 인정한다. | API 키·시스템 환경변수 정책 자체를 설계하는 task에서 GPT API 호출을 계속하면 자기 참조 부정합이 발생하므로, [Owner] 본 채널 검수가 Reviewer+Judge 대체 역할을 수행했다. | §C.1 |
-| 2026-05-17 | Task 2(9개 스킬 수정)와 r7 정비는 동시 진입 가능하다고 결정한다. | Task 2는 SKILL.md/scripts, r7은 AGENTS.md·SUB 매뉴얼·PROJECT.md 등 운영 문서 중심으로 직접 수정 대상이 분리되어 있어 병행 관리가 정합하다. | §C.1 |
+| 2026-05-17 | 후속 task 순서를 sync 구현 우선으로 정정한다. | sync 구현이 정책 검증 수단이며 dry-run으로 안전하게 검증 가능하므로, Task 2는 sync 스크립트 구현으로 우선 진행하고 이후 Task 3(9개 스킬 수정)과 r7 정비를 동시 진입한다. | §C.1 |
 | 2026-05-17 | G-2 결과는 수정 필요 상태로 종료하고, 실제 수정은 별도 task로 분리한다. | Reviewer HOLD와 Judge 수정 판정이 일치하며, 9개 스킬 전부 PARTIAL PASS이므로 종료 직행이 아니라 별도 정책+수정 task가 필요하다. | §C.1 |
 | 2026-05-17 | 마스터→클라이언트 sync 패턴을 후속 정책 설계의 기본 방향으로 삼는다. | 마스터에서 정책을 정의하고 각 클라이언트 프로젝트로 비밀값 없는 운영 자산만 sync해야 자료 drift와 내부 경로 부정합을 줄일 수 있다. | §C.1 |
 | 2026-05-17 | 외부 도구 키는 시스템 환경변수(`~/.zshrc`) 단일 출처 정책을 우선 검토한다. | 마스터·클라이언트 어느 쪽도 키 자료를 sync하지 않아야 하며, 같은 로컬·같은 사용자 운영 전제에서는 시스템 환경변수 단일 출처가 가장 정합하다. | §C.1 |
