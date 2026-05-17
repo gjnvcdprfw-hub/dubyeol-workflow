@@ -55,8 +55,9 @@
 ### §C.1 두별 워크플로우 운영 인프라
 
 - **한 줄 정의**: 두별 워크플로우 r6 베타 운영을 자동화·표준화하기 위한 Manus Agent Skills, run 산출물, 외부 감리, PROJECT.md 갱신 체계.
-- **현재 상태**: Phase H 완료. 마스터/클라이언트 분리 실행. 9개 스킬은 dubyeol-workflow 마스터에서 Phase G-1 동작 검증 설계 대기 중.
+- **현재 상태**: Phase G-1 검증 설계서 작성 완료. 9개 스킬별 검증 목적·입력·기대 동작·실패 신호·증거 기준·G-2 우선순위를 문서화했고, `01-load-sub-manual`의 `scripts/load_sub.sh` 부재 의심 신호를 G-2 최우선 검증 대상으로 확정.
 - **최근 마일스톤** (시간 역순, 최신이 위):
+  - 2026-05-17: Phase G-1 — 9개 Manus Agent Skills 동작 검증 설계 완료. `01-load-sub-manual`의 `scripts/load_sub.sh` 부재 의심 신호를 G-2 최우선 검증 대상으로 기록. (run: `20260517_g1-skills-verification-design`)
   - 2026-05-17: Phase H — 두별 워크플로우 마스터/클라이언트 분리 완료. dubyeol-workflow 독립 마스터 repo 구성, Phase A~F runs 이전, silkroadhub PROJECT.md §C.1 제거·§D 추가, GitHub rename 검증.
   - 2026-05-17: Phase F — 마누스 `skill-creator` 기반 9개 스킬 직접 등록 완료 (run: `20260517_skills-direct-register`).
   - 2026-05-16: Phase D — Manus Agent Skills 9개 공개 GitHub 저장소 push 및 import 검증 수행. GitHub import 경로 무효 확인, 백업·버전 추적용 유지. (run: `20260516_skills-github-register`)
@@ -64,10 +65,11 @@
   - 2026-05-16: Phase B — CLAUDE.md r6 갱신 (글로벌·프로젝트 양쪽) 완료. (run: `20260516_claude-md-r6-update`)
   - 2026-05-16: Phase A — r6 매뉴얼·양식 최초 적용. `dbdbc07` commit으로 r6-rollout 브랜치에 반영 (별도 harness run 없음).
 - **다음 마일스톤**:
-  - [ ] Phase G-1: 9개 스킬 동작 검증 설계 (dubyeol-workflow 마스터에서 별도 task).
+  - [x] Phase G-1: 9개 스킬 동작 검증 설계 (dubyeol-workflow 마스터에서 별도 task).
+  - [ ] Phase G-2: 9개 스킬 실제 동작 검증 수행 및 외부 감리 집중. `01-load-sub-manual`을 최우선 검증 대상으로 시작.
   - [ ] r7 정비: Phase A~H 회고 메모 1~14 반영, 매뉴얼 개정.
-- **현재 막힌 점**: Phase G-1 동작 검증 설계는 Phase H 완료 확인 후 진입.
-- **관련 design doc·문서**: `.harness/runs/20260516_skills-github-register/`, `.harness/runs/20260517_skills-direct-register/`, `https://github.com/gjnvcdprfw-hub/dubyeol-workflow`
+- **현재 막힌 점**: Phase G-1 대기 상태는 해소. 다음 막힌 점은 G-2 실제 검증 전 `01-load-sub-manual`의 스크립트 의존성(`scripts/load_sub.sh`) 존재 여부와 스킬 지시문 정합성 확인 필요.
+- **관련 design doc·문서**: `.harness/runs/20260517_g1-skills-verification-design/`, `.harness/runs/20260516_skills-github-register/`, `.harness/runs/20260517_skills-direct-register/`, `https://github.com/gjnvcdprfw-hub/dubyeol-workflow`
 
 *(모듈 추가 시 §C.N 번호로 확장)*
 
@@ -79,6 +81,7 @@
 
 | 날짜 | 결정 | 사유 | 영향 모듈 |
 |---|---|---|---|
+| 2026-05-17 | G-1은 9개 스킬 동작 검증의 설계 task로 제한하고, 실제 검증·외부 감리는 G-2에 집중한다. | 설계 단계와 실제 검증 단계에서 외부 감리를 중복 호출하면 비효율이 발생하므로, blast radius가 커지는 G-2에 감리를 집중한다. | §C.1 |
 | 2026-05-17 | 두별 워크플로우를 silkroadhub 내부 운영물이 아니라 독립 마스터 운영 프레임워크·도구킷으로 분리한다. | silkroadhub는 첫 번째 사업 클라이언트이며, 향후 다른 사업 프로젝트도 같은 운영 프레임워크를 가져와 적용해야 하므로 운영 원본·회고·스킬·매뉴얼을 마스터에서 관리해야 한다. | §C.1 전체 |
 | 2026-05-17 | Manus GitHub import 경로를 r6 스킬 등록 목적의 정답 경로가 아닌 것으로 재해석한다. | [Owner]가 마누스 자체 `skill-creator` 존재를 확인했고, 스킬 등록은 자체 스킬 생성·전달 메커니즘으로 직접 수행하는 것이 맞다고 정정함. GitHub 저장소는 백업·공개·버전 추적용으로 유지한다. | §C.1 |
 | 2026-05-17 | `dubyeol-workflow-skills` 단일 저장소 URL은 9개 스킬로 인식되지 않은 것으로 기록한다. | import 실행 후 Skills 목록에서 `01-load-sub-manual`과 `dubyeol` 검색 모두 `결과를 찾을 수 없음`으로 확인됨. 경로 가정 오류로 재해석. | §C.1 |
@@ -130,7 +133,7 @@
 ## E. 운영 정보
 
 - **마지막 갱신**: 2026-05-17 KST
-- **마지막 갱신 task run ID**: 20260517_dubyeol-workflow-master-split (Phase H SUB-5)
+- **마지막 갱신 task run ID**: 20260517_g1-skills-verification-design (Phase G-1 SUB-5)
 
 ### E.1 갱신 메커니즘
 
